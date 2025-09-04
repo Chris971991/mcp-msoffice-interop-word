@@ -2,6 +2,7 @@ import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { wordService } from "../word/word-service.js";
+import { debug } from "../utils/debug.js";
 
 // --- Tool: Set Header/Footer Text ---
 const setHeaderFooterTextSchema = z.object({
@@ -21,7 +22,7 @@ async function setHeaderFooterTextTool(args: z.infer<typeof setHeaderFooterTextS
       content: [{ type: "text", text: `Successfully set text for ${typeName} ${location} in section ${args.sectionIndex}.` }],
     };
   } catch (error: any) {
-    console.error("Error in setHeaderFooterTextTool:", error);
+    debug.error("Error in setHeaderFooterTextTool:", error);
     return {
       content: [{ type: "text", text: `Failed to set header/footer text: ${error.message}` }],
       isError: true,

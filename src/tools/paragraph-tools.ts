@@ -2,6 +2,7 @@ import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { wordService } from "../word/word-service.js";
+import { debug } from "../utils/debug.js";
 
 // --- Tool: Set Paragraph Alignment ---
 const setAlignmentSchema = z.object({
@@ -16,7 +17,7 @@ async function setAlignmentTool(args: z.infer<typeof setAlignmentSchema>): Promi
       content: [{ type: "text", text: `Successfully set paragraph alignment to ${alignmentMap[args.alignment]}.` }],
     };
   } catch (error: any) {
-    console.error("Error in setAlignmentTool:", error);
+    debug.error("Error in setAlignmentTool:", error);
     return {
       content: [{ type: "text", text: `Failed to set paragraph alignment: ${error.message}` }],
       isError: true,
@@ -36,7 +37,7 @@ async function setLeftIndentTool(args: z.infer<typeof setLeftIndentSchema>): Pro
       content: [{ type: "text", text: `Successfully set left indent to ${args.indentPoints} points.` }],
     };
   } catch (error: any) {
-    console.error("Error in setLeftIndentTool:", error);
+    debug.error("Error in setLeftIndentTool:", error);
     return {
       content: [{ type: "text", text: `Failed to set left indent: ${error.message}` }],
       isError: true,
@@ -56,7 +57,7 @@ async function setRightIndentTool(args: z.infer<typeof setRightIndentSchema>): P
       content: [{ type: "text", text: `Successfully set right indent to ${args.indentPoints} points.` }],
     };
   } catch (error: any) {
-    console.error("Error in setRightIndentTool:", error);
+    debug.error("Error in setRightIndentTool:", error);
     return {
       content: [{ type: "text", text: `Failed to set right indent: ${error.message}` }],
       isError: true,
@@ -77,7 +78,7 @@ async function setFirstLineIndentTool(args: z.infer<typeof setFirstLineIndentSch
             content: [{ type: "text", text: `Successfully set first line ${indentType} to ${Math.abs(args.indentPoints)} points.` }],
         };
     } catch (error: any) {
-        console.error("Error in setFirstLineIndentTool:", error);
+        debug.error("Error in setFirstLineIndentTool:", error);
         return {
             content: [{ type: "text", text: `Failed to set first line indent: ${error.message}` }],
             isError: true,
@@ -97,7 +98,7 @@ async function setSpaceBeforeTool(args: z.infer<typeof setSpaceBeforeSchema>): P
       content: [{ type: "text", text: `Successfully set space before paragraph to ${args.spacePoints} points.` }],
     };
   } catch (error: any) {
-    console.error("Error in setSpaceBeforeTool:", error);
+    debug.error("Error in setSpaceBeforeTool:", error);
     return {
       content: [{ type: "text", text: `Failed to set space before paragraph: ${error.message}` }],
       isError: true,
@@ -117,7 +118,7 @@ async function setSpaceAfterTool(args: z.infer<typeof setSpaceAfterSchema>): Pro
       content: [{ type: "text", text: `Successfully set space after paragraph to ${args.spacePoints} points.` }],
     };
   } catch (error: any) {
-    console.error("Error in setSpaceAfterTool:", error);
+    debug.error("Error in setSpaceAfterTool:", error);
     return {
       content: [{ type: "text", text: `Failed to set space after paragraph: ${error.message}` }],
       isError: true,
@@ -147,7 +148,7 @@ async function setLineSpacingTool(args: z.infer<typeof setLineSpacingSchema>): P
       content: [{ type: "text", text: message }],
     };
   } catch (error: any) {
-    console.error("Error in setLineSpacingTool:", error);
+    debug.error("Error in setLineSpacingTool:", error);
     return {
       content: [{ type: "text", text: `Failed to set line spacing: ${error.message}` }],
       isError: true,

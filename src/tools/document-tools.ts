@@ -2,6 +2,7 @@ import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult, McpError, ErrorCode } from "@modelcontextprotocol/sdk/types.js";
 import { wordService } from "../word/word-service.js";
+import { debug } from "../utils/debug.js";
 import path from 'path'; // Import path for potential path manipulation
 
 // --- Tool: Create New Document ---
@@ -14,7 +15,7 @@ async function createDocumentTool(): Promise<CallToolResult> {
       content: [{ type: "text", text: "Successfully created a new Word document." }],
     };
   } catch (error: any) {
-    console.error("Error in createDocumentTool:", error);
+    debug.error("Error in createDocumentTool:", error);
     return {
       content: [{ type: "text", text: `Failed to create document: ${error.message}` }],
       isError: true,
@@ -36,7 +37,7 @@ async function openDocumentTool(args: z.infer<typeof openDocumentSchema>): Promi
       content: [{ type: "text", text: `Successfully opened document: ${absolutePath}` }],
     };
   } catch (error: any) {
-    console.error("Error in openDocumentTool:", error);
+    debug.error("Error in openDocumentTool:", error);
     return {
       content: [{ type: "text", text: `Failed to open document '${args.filePath}': ${error.message}` }],
       isError: true,
@@ -54,7 +55,7 @@ async function saveDocumentTool(): Promise<CallToolResult> {
       content: [{ type: "text", text: "Successfully saved the active document." }],
     };
   } catch (error: any) {
-    console.error("Error in saveDocumentTool:", error);
+    debug.error("Error in saveDocumentTool:", error);
     // Provide more context if possible (e.g., if no active doc)
     return {
       content: [{ type: "text", text: `Failed to save active document: ${error.message}` }],
@@ -79,7 +80,7 @@ async function saveDocumentAsTool(args: z.infer<typeof saveDocumentAsSchema>): P
       content: [{ type: "text", text: `Successfully saved document as: ${absolutePath}` }],
     };
   } catch (error: any) {
-    console.error("Error in saveDocumentAsTool:", error);
+    debug.error("Error in saveDocumentAsTool:", error);
     return {
       content: [{ type: "text", text: `Failed to save document as '${args.filePath}': ${error.message}` }],
       isError: true,
@@ -102,7 +103,7 @@ async function closeDocumentTool(args: z.infer<typeof closeDocumentSchema>): Pro
       content: [{ type: "text", text: "Successfully closed the active document." }],
     };
   } catch (error: any) {
-    console.error("Error in closeDocumentTool:", error);
+    debug.error("Error in closeDocumentTool:", error);
      // Check if the error is because no document was active
      if (error.message.includes("No active document")) {
          return {

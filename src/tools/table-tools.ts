@@ -2,6 +2,7 @@ import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { wordService } from "../word/word-service.js";
+import { debug } from "../utils/debug.js";
 
 // --- Tool: Add Table ---
 const addTableSchema = z.object({
@@ -17,7 +18,7 @@ async function addTableTool(args: z.infer<typeof addTableSchema>): Promise<CallT
       content: [{ type: "text", text: `Successfully added a ${args.numRows}x${args.numCols} table.` }],
     };
   } catch (error: any) {
-    console.error("Error in addTableTool:", error);
+    debug.error("Error in addTableTool:", error);
     return {
       content: [{ type: "text", text: `Failed to add table: ${error.message}` }],
       isError: true,
@@ -40,7 +41,7 @@ async function setTableCellTextTool(args: z.infer<typeof setTableCellTextSchema>
       content: [{ type: "text", text: `Successfully set text in table ${args.tableIndex}, cell (${args.rowIndex}, ${args.colIndex}).` }],
     };
   } catch (error: any) {
-    console.error("Error in setTableCellTextTool:", error);
+    debug.error("Error in setTableCellTextTool:", error);
     return {
       content: [{ type: "text", text: `Failed to set cell text: ${error.message}` }],
       isError: true,
@@ -62,7 +63,7 @@ async function insertTableRowTool(args: z.infer<typeof insertTableRowSchema>): P
             content: [{ type: "text", text: `Successfully inserted row into table ${args.tableIndex} ${position}.` }],
         };
     } catch (error: any) {
-        console.error("Error in insertTableRowTool:", error);
+        debug.error("Error in insertTableRowTool:", error);
         return {
             content: [{ type: "text", text: `Failed to insert table row: ${error.message}` }],
             isError: true,
@@ -84,7 +85,7 @@ async function insertTableColumnTool(args: z.infer<typeof insertTableColumnSchem
             content: [{ type: "text", text: `Successfully inserted column into table ${args.tableIndex} ${position}.` }],
         };
     } catch (error: any) {
-        console.error("Error in insertTableColumnTool:", error);
+        debug.error("Error in insertTableColumnTool:", error);
         return {
             content: [{ type: "text", text: `Failed to insert table column: ${error.message}` }],
             isError: true,
@@ -107,7 +108,7 @@ async function applyTableAutoFormatTool(args: z.infer<typeof applyTableAutoForma
             content: [{ type: "text", text: `Successfully applied format '${args.formatName}' to table ${args.tableIndex}.` }],
         };
     } catch (error: any) {
-        console.error("Error in applyTableAutoFormatTool:", error);
+        debug.error("Error in applyTableAutoFormatTool:", error);
         return {
             content: [{ type: "text", text: `Failed to apply table format: ${error.message}` }],
             isError: true,

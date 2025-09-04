@@ -2,6 +2,7 @@ import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { wordService } from "../word/word-service.js";
+import { debug } from "../utils/debug.js";
 import path from 'path';
 
 // --- Tool: Insert Picture ---
@@ -19,7 +20,7 @@ async function insertPictureTool(args: z.infer<typeof insertPictureSchema>): Pro
       content: [{ type: "text", text: `Successfully inserted picture from: ${absolutePath}` }],
     };
   } catch (error: any) {
-    console.error("Error in insertPictureTool:", error);
+    debug.error("Error in insertPictureTool:", error);
     return {
       content: [{ type: "text", text: `Failed to insert picture: ${error.message}` }],
       isError: true,
@@ -48,7 +49,7 @@ async function setInlinePictureSizeTool(args: z.infer<typeof setInlinePictureSiz
       content: [{ type: "text", text: `Successfully resized inline picture at index ${args.shapeIndex}.` }],
     };
   } catch (error: any) {
-    console.error("Error in setInlinePictureSizeTool:", error);
+    debug.error("Error in setInlinePictureSizeTool:", error);
     return {
       content: [{ type: "text", text: `Failed to resize inline picture: ${error.message}` }],
       isError: true,

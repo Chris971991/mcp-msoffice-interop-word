@@ -2,6 +2,7 @@ import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { wordService } from "../word/word-service.js";
+import { debug } from "../utils/debug.js";
 
 // --- Tool: Insert Text ---
 const insertTextSchema = z.object({
@@ -15,7 +16,7 @@ async function insertTextTool(args: z.infer<typeof insertTextSchema>): Promise<C
       content: [{ type: "text", text: "Successfully inserted text." }],
     };
   } catch (error: any) {
-    console.error("Error in insertTextTool:", error);
+    debug.error("Error in insertTextTool:", error);
     return {
       content: [{ type: "text", text: `Failed to insert text: ${error.message}` }],
       isError: true,
@@ -39,7 +40,7 @@ async function deleteTextTool(args: z.infer<typeof deleteTextSchema>): Promise<C
       content: [{ type: "text", text: `Successfully deleted ${Math.abs(args.count ?? 1)} ${unitName} ${direction}.` }],
     };
   } catch (error: any) {
-    console.error("Error in deleteTextTool:", error);
+    debug.error("Error in deleteTextTool:", error);
     return {
       content: [{ type: "text", text: `Failed to delete text: ${error.message}` }],
       isError: true,
@@ -73,7 +74,7 @@ async function findReplaceTool(args: z.infer<typeof findReplaceSchema>): Promise
       isError: !found && args.replaceAll, // Consider it an error only if replaceAll was true and nothing was found
     };
   } catch (error: any) {
-    console.error("Error in findReplaceTool:", error);
+    debug.error("Error in findReplaceTool:", error);
     return {
       content: [{ type: "text", text: `Failed to find and replace text: ${error.message}` }],
       isError: true,
@@ -91,7 +92,7 @@ async function toggleBoldTool(): Promise<CallToolResult> {
       content: [{ type: "text", text: "Toggled bold formatting for the selection." }],
     };
   } catch (error: any) {
-    console.error("Error in toggleBoldTool:", error);
+    debug.error("Error in toggleBoldTool:", error);
     return {
       content: [{ type: "text", text: `Failed to toggle bold: ${error.message}` }],
       isError: true,
@@ -109,7 +110,7 @@ async function toggleItalicTool(): Promise<CallToolResult> {
       content: [{ type: "text", text: "Toggled italic formatting for the selection." }],
     };
   } catch (error: any) {
-    console.error("Error in toggleItalicTool:", error);
+    debug.error("Error in toggleItalicTool:", error);
     return {
       content: [{ type: "text", text: `Failed to toggle italic: ${error.message}` }],
       isError: true,
@@ -129,7 +130,7 @@ async function toggleUnderlineTool(args: z.infer<typeof toggleUnderlineSchema>):
       content: [{ type: "text", text: "Toggled underline formatting for the selection." }],
     };
   } catch (error: any) {
-    console.error("Error in toggleUnderlineTool:", error);
+    debug.error("Error in toggleUnderlineTool:", error);
     return {
       content: [{ type: "text", text: `Failed to toggle underline: ${error.message}` }],
       isError: true,

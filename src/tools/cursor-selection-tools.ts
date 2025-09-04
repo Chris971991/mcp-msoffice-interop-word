@@ -2,6 +2,7 @@ import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { wordService } from "../word/word-service.js";
+import { debug } from "../utils/debug.js";
 
 // --- Tool: Move Cursor to Start ---
 const moveCursorToStartSchema = z.object({});
@@ -13,7 +14,7 @@ async function moveCursorToStartTool(): Promise<CallToolResult> {
       content: [{ type: "text", text: "Successfully moved cursor to the start of the document." }],
     };
   } catch (error: any) {
-    console.error("Error in moveCursorToStartTool:", error);
+    debug.error("Error in moveCursorToStartTool:", error);
     return {
       content: [{ type: "text", text: `Failed to move cursor to start: ${error.message}` }],
       isError: true,
@@ -31,7 +32,7 @@ async function moveCursorToEndTool(): Promise<CallToolResult> {
       content: [{ type: "text", text: "Successfully moved cursor to the end of the document." }],
     };
   } catch (error: any) {
-    console.error("Error in moveCursorToEndTool:", error);
+    debug.error("Error in moveCursorToEndTool:", error);
     return {
       content: [{ type: "text", text: `Failed to move cursor to end: ${error.message}` }],
       isError: true,
@@ -73,7 +74,7 @@ async function moveCursorTool(args: z.infer<typeof moveCursorSchema>): Promise<C
       content: [{ type: "text", text: `Successfully ${action} ${Math.abs(args.count)} ${unitName} ${direction}.` }],
     };
   } catch (error: any) {
-    console.error("Error in moveCursorTool:", error);
+    debug.error("Error in moveCursorTool:", error);
     return {
       content: [{ type: "text", text: `Failed to move cursor: ${error.message}` }],
       isError: true,
@@ -91,7 +92,7 @@ async function selectAllTool(): Promise<CallToolResult> {
       content: [{ type: "text", text: "Successfully selected the entire document." }],
     };
   } catch (error: any) {
-    console.error("Error in selectAllTool:", error);
+    debug.error("Error in selectAllTool:", error);
     return {
       content: [{ type: "text", text: `Failed to select all: ${error.message}` }],
       isError: true,
@@ -111,7 +112,7 @@ async function selectParagraphTool(args: z.infer<typeof selectParagraphSchema>):
       content: [{ type: "text", text: `Successfully selected paragraph ${args.paragraphIndex}.` }],
     };
   } catch (error: any) {
-    console.error("Error in selectParagraphTool:", error);
+    debug.error("Error in selectParagraphTool:", error);
     return {
       content: [{ type: "text", text: `Failed to select paragraph: ${error.message}` }],
       isError: true,
@@ -132,7 +133,7 @@ async function collapseSelectionTool(args: z.infer<typeof collapseSelectionSchem
       content: [{ type: "text", text: `Successfully collapsed selection to its ${position}.` }],
     };
   } catch (error: any) {
-    console.error("Error in collapseSelectionTool:", error);
+    debug.error("Error in collapseSelectionTool:", error);
     return {
       content: [{ type: "text", text: `Failed to collapse selection: ${error.message}` }],
       isError: true,
@@ -153,7 +154,7 @@ async function getSelectionTextTool(): Promise<CallToolResult> {
       ],
     };
   } catch (error: any) {
-    console.error("Error in getSelectionTextTool:", error);
+    debug.error("Error in getSelectionTextTool:", error);
     return {
       content: [{ type: "text", text: `Failed to get selection text: ${error.message}` }],
       isError: true,
@@ -193,7 +194,7 @@ async function getSelectionInfoTool(): Promise<CallToolResult> {
       ],
     };
   } catch (error: any) {
-    console.error("Error in getSelectionInfoTool:", error);
+    debug.error("Error in getSelectionInfoTool:", error);
     return {
       content: [{ type: "text", text: `Failed to get selection info: ${error.message}` }],
       isError: true,

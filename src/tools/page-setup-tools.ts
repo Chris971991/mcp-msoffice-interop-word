@@ -2,6 +2,7 @@ import { z } from "zod";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { wordService } from "../word/word-service.js";
+import { debug } from "../utils/debug.js";
 
 // --- Tool: Set Page Margins ---
 const setPageMarginsSchema = z.object({
@@ -18,7 +19,7 @@ async function setPageMarginsTool(args: z.infer<typeof setPageMarginsSchema>): P
       content: [{ type: "text", text: `Successfully set page margins (Top: ${args.topPoints}, Bottom: ${args.bottomPoints}, Left: ${args.leftPoints}, Right: ${args.rightPoints} points).` }],
     };
   } catch (error: any) {
-    console.error("Error in setPageMarginsTool:", error);
+    debug.error("Error in setPageMarginsTool:", error);
     return {
       content: [{ type: "text", text: `Failed to set page margins: ${error.message}` }],
       isError: true,
@@ -39,7 +40,7 @@ async function setPageOrientationTool(args: z.infer<typeof setPageOrientationSch
       content: [{ type: "text", text: `Successfully set page orientation to ${orientationName}.` }],
     };
   } catch (error: any) {
-    console.error("Error in setPageOrientationTool:", error);
+    debug.error("Error in setPageOrientationTool:", error);
     return {
       content: [{ type: "text", text: `Failed to set page orientation: ${error.message}` }],
       isError: true,
@@ -60,7 +61,7 @@ async function setPaperSizeTool(args: z.infer<typeof setPaperSizeSchema>): Promi
       content: [{ type: "text", text: `Successfully set paper size (Enum value: ${args.paperSize}).` }],
     };
   } catch (error: any) {
-    console.error("Error in setPaperSizeTool:", error);
+    debug.error("Error in setPaperSizeTool:", error);
     return {
       content: [{ type: "text", text: `Failed to set paper size: ${error.message}` }],
       isError: true,
